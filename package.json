@@ -16,5 +16,12 @@
   "bugs": {
     "url": "https://github.com/vladimir-grigore/music-spotlight/issues"
   },
-  "homepage": "https://github.com/vladimir-grigore/music-spotlight#readme"
+  "homepage": "https://github.com/vladimir-grigore/music-spotlight#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "nodemon": "^1.11.0",
+    "querystring": "^0.2.0",
+    "request": "^2.81.0",
+    "spotify-graphql": "^1.4.0"
+  }
 }
