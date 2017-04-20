@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -266,11 +266,64 @@ module.exports = isObject;
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(6);
+module.exports = __webpack_require__(7);
 
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var SpotifyWebApi = __webpack_require__(2);
+
+// credentials are optional
+var spotifyApi = new SpotifyWebApi({
+  clientId : 'e573885cca0743bb886be227a00a59b1',
+  clientSecret : '7b2c23f2fbea45f7bec90585debcb715',
+  redirectUri : 'http://localhost:8888/callback'
+});
+
+$(document).ready(function(){
+  // find template and compile it
+  var templateSource = document.getElementById('results-template').innerHTML,
+      template = Handlebars.compile(templateSource),
+      resultsPlaceholder = document.getElementById('results'),
+      playingCssClass = 'playing',
+      audioObject = null;
+
+  function getAlbumsOfArtist(artist_name){
+    // Search artists
+    spotifyApi.searchArtists(artist_name)
+      .then(function(data) {
+        console.log(`Search artists named ${name}`, data.body.artists.items);
+        resultsPlaceholder.innerHTML = template(data.body);
+      }, function(err) {
+        console.error(err);
+      });
+  }
+
+  // spotifyApi.getArtistAlbums('2ye2Wgw4gimLv2eAKyk1NB', {limit: 5, market: 'US'})
+  //   .then(function(data) {
+  //     // console.log("--", data.body);
+  //     return data.body.items.map(function(a) { return a.id; });
+  //   })
+  //   .then(function(albums) {
+  //     return spotifyApi.getAlbums(albums);
+  //   }).then(function(data) {
+  //     console.log("==", data.body);
+  // });
+
+  document.getElementById('search-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    getAlbumsOfArtist(document.getElementById('query').value);
+  }, false);
+});
+function hey(){
+  console.log("HEY!")
+}
+module.exports = {hey};
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -439,7 +492,7 @@ Emitter.prototype.hasListeners = function(event){
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -459,14 +512,14 @@ module.exports.builder = function() {
 };
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var superagent = __webpack_require__(9),
-    WebApiError = __webpack_require__(7);
+var superagent = __webpack_require__(10),
+    WebApiError = __webpack_require__(8);
 
 var HttpManager = {};
 
@@ -611,15 +664,15 @@ module.exports = HttpManager;
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var AuthenticationRequest = __webpack_require__(4),
-    WebApiRequest = __webpack_require__(8),
-    HttpManager = __webpack_require__(5);
+var AuthenticationRequest = __webpack_require__(5),
+    WebApiRequest = __webpack_require__(9),
+    HttpManager = __webpack_require__(6);
 
 function SpotifyWebApi(credentials) {
   this._credentials = credentials || {};
@@ -2597,7 +2650,7 @@ module.exports = SpotifyWebApi;
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2614,7 +2667,7 @@ WebapiError.prototype = Error.prototype;
 module.exports = WebapiError;
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2634,7 +2687,7 @@ module.exports.builder = function() {
 };
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -2651,8 +2704,8 @@ if (typeof window !== 'undefined') { // Browser window
   root = this;
 }
 
-var Emitter = __webpack_require__(3);
-var requestBase = __webpack_require__(10);
+var Emitter = __webpack_require__(4);
+var requestBase = __webpack_require__(11);
 var isObject = __webpack_require__(1);
 
 /**
@@ -2665,7 +2718,7 @@ function noop(){};
  * Expose `request`.
  */
 
-var request = module.exports = __webpack_require__(11).bind(null, Request);
+var request = module.exports = __webpack_require__(12).bind(null, Request);
 
 /**
  * Determine XHR.
@@ -3616,7 +3669,7 @@ request.put = function(url, data, fn){
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -3994,7 +4047,7 @@ exports.send = function(data){
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports) {
 
 // The node and browser modules expose versions of this with the
@@ -4031,55 +4084,6 @@ function request(RequestConstructor, method, url) {
 module.exports = request;
 
 
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var SpotifyWebApi = __webpack_require__(2);
-
-// credentials are optional
-var spotifyApi = new SpotifyWebApi({
-  clientId : 'e573885cca0743bb886be227a00a59b1',
-  clientSecret : '7b2c23f2fbea45f7bec90585debcb715',
-  redirectUri : 'http://localhost:8888/callback'
-});
-
-$(document).ready(function(){
-  // find template and compile it
-  var templateSource = document.getElementById('results-template').innerHTML,
-      template = Handlebars.compile(templateSource),
-      resultsPlaceholder = document.getElementById('results'),
-      playingCssClass = 'playing',
-      audioObject = null;
-
-  function getAlbumsOfArtist(artist_name){
-    // Search artists
-    spotifyApi.searchArtists(artist_name)
-      .then(function(data) {
-        console.log(`Search artists named ${name}`, data.body.artists.items);
-        resultsPlaceholder.innerHTML = template(data.body);
-      }, function(err) {
-        console.error(err);
-      });
-  }
-
-  // spotifyApi.getArtistAlbums('2ye2Wgw4gimLv2eAKyk1NB', {limit: 5, market: 'US'})
-  //   .then(function(data) {
-  //     // console.log("--", data.body);
-  //     return data.body.items.map(function(a) { return a.id; });
-  //   })
-  //   .then(function(albums) {
-  //     return spotifyApi.getAlbums(albums);
-  //   }).then(function(data) {
-  //     console.log("==", data.body);
-  // });
-
-  document.getElementById('search-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    getAlbumsOfArtist(document.getElementById('query').value);
-  }, false);
-});
-
 /***/ })
 /******/ ]);
-//# sourceMappingURL=app.bundle.js.map
+//# sourceMappingURL=script2.bundle.js.map

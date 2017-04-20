@@ -42,3 +42,7 @@ $(document).ready(function(){
     getAlbumsOfArtist(document.getElementById('query').value);
   }, false);
 });
+function hey(){
+  console.log("HEY!")
+}
+module.exports = {hey};

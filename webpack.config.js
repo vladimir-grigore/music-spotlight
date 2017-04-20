@@ -1,7 +1,12 @@
- module.exports = {
+var path = require("path");
+
+module.exports = {
      devtool: 'source-map',
-     entry: './src/script2.js',
+     entry: {
+         script2: './src/script2.js',
+         vis_nodes: './src/vis_nodes.js'
+        },
      output: {
-         filename: 'app.bundle.js'
+		filename: "[name].bundle.js"
      }
  };
