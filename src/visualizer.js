@@ -1,93 +1,112 @@
+import SpotifyAPI from './spotify_web_api.js'
+const spotify_API = new SpotifyAPI();
+
 const LENGTH_MAIN = 350,
-		LENGTH_SERVER = 150,
-		LENGTH_SUB = 50,
-		WIDTH_SCALE = 2,
-		GREEN = 'green',
-		RED = '#C5000B',
-		ORANGE = 'orange',
-		GRAY = 'gray',
-		BLACK = '#2B1B17';
+	LENGTH_SERVER = 150,
+	LENGTH_SUB = 50,
+	WIDTH_SCALE = 2,
+	GREEN = 'green',
+	RED = '#C5000B',
+	ORANGE = 'orange',
+	GRAY = 'gray',
+	BLACK = '#2B1B17',
+	BLUE = 'blue';
 
 import { DataSet, Network } from 'vis';
 
 export default class Visualizer {
+	constructor(container, nodes = [], edges = [], options = {}) {
+		this.container = container;
+		this.nodes = new DataSet(nodes);
+		this.edges = new DataSet(edges);
 
-		constructor(container, nodes = [], edges = [], options = {}) {
-				this.container = container;
-				this.nodes = new DataSet(nodes);
-				this.edges = new DataSet(edges);
+		const data = {
+			nodes: this.nodes,
+			edges: this.edges
+		};
 
-				const data = {
-						nodes: this.nodes,
-						edges: this.edges
-				};
-
-				this.options = Object.assign({}, {
-						nodes: {
-								scaling: {
-										min: 16,
-										max: 32
-								}
-						},
-						edges: {
-								color: GRAY,
-								smooth: false
-						},
-						physics: {
-								barnesHut: {
-										gravitationalConstant: -30000
-								},
-								stabilization: {
-										iterations: 2500
-								}
-						},
-						groups: {
-								artists: {
-										shape: 'dot',
-										color: RED
-								}
-						}
-				}, options);
-
-				this.network = new Network(this.container, data, options);
-				this.network.on('click', this.onClick);
-		}
-
-		onClick = async ({ event, nodes, edges, ...e }) => {
-			event.preventDefault();
-			event.stopPropagation();
-
-			const [ id ] = nodes;
-			if(!id) {
-				return;
+		this.options = Object.assign({}, {
+			nodes: {
+				scaling: {
+					min: 8,
+					max: 16
+				}
+			},
+			edges: {
+				color: GRAY,
+				smooth: true
+			},
+			physics: {
+				barnesHut: {
+					gravitationalConstant: -30000
+				},
+				stabilization: {
+					iterations: 2500
+				}
+			},
+			groups: {
+				artist: {
+					shape: 'dot',
+					color: RED
+				},
+				album: {
+					shape: 'dot',
+					color: BLUE
+				},
+				track: {
+					shape: 'dot',
+					color: GREEN
+				}
 			}
-			
-			const node = this.nodes.get(id);
-			const album = await getSongsForAlbum(node.albumId);
-			const randomId = (new Date().getTime()).toString(36);
-			this.addNode(randomId, randomId);
-			this.addEdge(id, randomId, "Label");
-		}
+		}, options);
 
-		addNode(id, label) {
-				this.nodes.add({
-						id,
-						label,
-						shape: 'dot',
-						group: 'artists',
-						color: RED,
-						value: 6
-				});
-		}
+		this.network = new Network(this.container, data, options);
+		this.network.on('click', this.onClick);
+	}
 
-		addEdge(from, to, label) {
-				this.edges.add({
-						from,
-						to,
-						label,
-						width: WIDTH_SCALE * 2
-				});
+	onClick = async ({ event, nodes, ...e }) => {
+		event.preventDefault();
+		event.stopPropagation();
+		const [ id ] = nodes;
+		if(!id) {
+			return;
 		}
+		const node = this.nodes.get(id);
+		console.log("__", node.group)
+		
+		switch (node.group) {
+			case 'artist':
+				console.log('You clicked on an artist');
+				spotify_API.get_albums_for_artist(node.id);
+				break;
+			default:
+				console.log('sorry');
+		}
+		// const album = await getSongsForAlbum(node.albumId);
+		const randomId = (new Date().getTime()).toString(36);
+		this.addNode(randomId, randomId);
+		this.addEdge(id, randomId, "Label");
+	}
+
+	addNode(id, label) {
+		this.nodes.add({
+			id,
+			label,
+			shape: 'dot',
+			group: 'artist',
+			color: RED,
+			value: 6
+		});
+	}
+
+	addEdge(from, to, label) {
+		this.edges.add({
+			from,
+			to,
+			label,
+			width: WIDTH_SCALE * 2
+		});
+	}
 }
 
 // // var $ = require('jquery');
