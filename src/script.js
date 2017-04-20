@@ -20,7 +20,7 @@ $(document).ready(function(){
             url: 'https://api.spotify.com/v1/search',
             data: {
                 q: query,
-                type: 'album'
+                type: 'artist'
             },
             success: function (response) {
                 resultsPlaceholder.innerHTML = template(response);
@@ -55,5 +55,5 @@ $(document).ready(function(){
     document.getElementById('search-form').addEventListener('submit', function (e) {
         e.preventDefault();
         searchAlbums(document.getElementById('query').value);
-}, false);
+    }, false);
 });

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script src="script.js"></script>
+    <script src="app.bundle.js"></script>
   </head>
 
   <body>
@@ -23,8 +23,9 @@
     </div>
 
     <script id="results-template" type="text/x-handlebars-template">
-        {{#each albums.items}}
-        <div style="background-image:url({{images.0.url}})" data-album-id="{{id}}" class="cover"></div>
+        {{#each artists.items}}
+        <div data-artist-id="{{id}}">{{name}}</div>
+        <!--<div style="background-image:url({{images.0.url}})" data-album-id="{{id}}" class="cover"></div>-->
         {{/each}}
     </script>
   </body>
