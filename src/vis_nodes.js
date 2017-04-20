@@ -5,7 +5,6 @@ const LENGTH_MAIN = 350,
 		GREEN = 'green',
 		RED = '#C5000B',
 		ORANGE = 'orange',
-		//GRAY = '#666666',
 		GRAY = 'gray',
 		BLACK = '#2B1B17';
 
@@ -45,20 +44,43 @@ export default class Visualizer {
 						groups: {
 								artists: {
 										shape: 'dot',
-										color: "#ABCDEF" // red
+										color: RED
 								}
 						}
 				}, options);
 
-				this.vis = new Network(this.container, data, options);
+				this.network = new Network(this.container, data, options);
+				this.network.on('click', this.onClick);
+		}
+
+		onClick = async ({ event, nodes, edges, ...e }) => {
+			event.preventDefault();
+			event.stopPropagation();
+
+			const [ id ] = nodes;
+			if(!id) {
+				return;
+			}
+			
+			const node = this.nodes.get(id);
+			try {
+				const album = await getSongsForAlbum(node.albumId);
+				const randomId = (new Date().getTime()).toString(36);
+				this.addNode(randomId, randomId);
+				this.addEdge(id, randomId, "Label");
+			catch(error) {
+				// do something with the error
+			}
 		}
 
 		addNode(id, label) {
 				this.nodes.add({
 						id,
 						label,
+						shape: 'dot',
 						group: 'artists',
-						value: 10
+						color: RED,
+						value: 6
 				});
 		}
 

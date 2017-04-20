@@ -31,6 +31,13 @@ $(() => {
     // return data;
   }
 
+  // async function foo() {
+  //   const data = await api.getArtistAlbums('2ye2Wgw4gimLv2eAKyk1NB', {limit: 5, market: 'US'})
+  //   const ids = data.body.items.map(x => x.id);
+  //   const albums = await api.getAlbums(ids);
+  //   console.log(albums.body);
+  // }
+
   // async function getAlbumsAndSongsForArtist(id) {
   //   const artist = await api.getArtist(id);
 
@@ -39,13 +46,6 @@ $(() => {
   //   }
 
   //   const songs = await Promise.all(artist.albums.map(album => api.getSongsForAlbum(album.id)));
-  // }
-
-  // async function foo() {
-  //   const data = await api.getArtistAlbums('2ye2Wgw4gimLv2eAKyk1NB', {limit: 5, market: 'US'})
-  //   const ids = data.body.items.map(x => x.id);
-  //   const albums = await api.getAlbums(ids);
-  //   console.log(albums.body);
   // }
 
   const $query = $('#query');
