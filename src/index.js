@@ -2,9 +2,10 @@ import "bootstrap/dist/css/bootstrap.css";
 import $ from 'jquery';
 // import Handlebars from 'handlebars/dist/handlebars.js';
 
-import "../style.css";
+import "../styles/style.css";
 import Visualizer from './visualizer.js';
 import SpotifyAPI from './spotify_web_api.js'
+
 
 // import React, { Component } from 'react';
 // import { render } from 'react-dom';
