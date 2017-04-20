@@ -3,7 +3,7 @@ import $ from 'jquery';
 import Handlebars from 'handlebars/dist/handlebars.js';
 import SpotifyWebApi from 'spotify-web-api-node';
 
-import "../style.css";
+import "../styles/style.css";
 import Visualizer from './vis_nodes.js';
 
 // import React, { Component } from 'react';
