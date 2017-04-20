@@ -63,14 +63,10 @@ export default class Visualizer {
 			}
 			
 			const node = this.nodes.get(id);
-			try {
-				const album = await getSongsForAlbum(node.albumId);
-				const randomId = (new Date().getTime()).toString(36);
-				this.addNode(randomId, randomId);
-				this.addEdge(id, randomId, "Label");
-			catch(error) {
-				// do something with the error
-			}
+			const album = await getSongsForAlbum(node.albumId);
+			const randomId = (new Date().getTime()).toString(36);
+			this.addNode(randomId, randomId);
+			this.addEdge(id, randomId, "Label");
 		}
 
 		addNode(id, label) {
