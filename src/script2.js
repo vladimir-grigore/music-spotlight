@@ -1,13 +1,15 @@
 var SpotifyWebApi = require('spotify-web-api-node');
+// var Visu = require('./vis_nodes');
+import Visualizer from './vis_nodes.js';
 
 // credentials are optional
 var spotifyApi = new SpotifyWebApi({
-  clientId : 'e573885cca0743bb886be227a00a59b1',
-  clientSecret : '7b2c23f2fbea45f7bec90585debcb715',
-  redirectUri : 'http://localhost:8888/callback'
+//   clientId : '',
+//   clientSecret : '',
+//   redirectUri : ''
 });
 
-$(document).ready(function(){
+$(document).ready(function() {
   // find template and compile it
   var templateSource = document.getElementById('results-template').innerHTML,
       template = Handlebars.compile(templateSource),
@@ -15,16 +17,29 @@ $(document).ready(function(){
       playingCssClass = 'playing',
       audioObject = null;
 
-  function getAlbumsOfArtist(artist_name){
-    // Search artists
-    spotifyApi.searchArtists(artist_name)
-      .then(function(data) {
-        console.log(`Search artists named ${name}`, data.body.artists.items);
-        resultsPlaceholder.innerHTML = template(data.body);
-      }, function(err) {
-        console.error(err);
-      });
-  }
+  const network = document.getElementById('network');
+  const visualizer = window.visualizer = new Visualizer(network);
+  
+  // function getAlbumsOfArtist(artist_name){
+  //   // Search artists
+  //   spotifyApi.searchArtists(artist_name)
+  //     .then(function(data) {
+  //       console.log(`Search artists named ${name}`, data.body.artists.items);
+  //       // Used in vis_nodes to create artist nodes
+  //       for (let item of data.body.artists.items){
+  //         // vis_nodes.createArtistNodes(item.id, item.name);
+  //         visualizer.addNode(item.id, item.name);
+  //       }
+
+  //       resultsPlaceholder.innerHTML = template(data.body);
+  //     }, function(err) {
+  //       console.error(err);
+  //     });
+  // }
+
+  // async function getAlbumsOfArtist(artist_name) {
+  //   const 
+  // }
 
   // spotifyApi.getArtistAlbums('2ye2Wgw4gimLv2eAKyk1NB', {limit: 5, market: 'US'})
   //   .then(function(data) {
@@ -42,7 +57,3 @@ $(document).ready(function(){
     getAlbumsOfArtist(document.getElementById('query').value);
   }, false);
 });
-function hey(){
-  console.log("HEY!")
-}
-module.exports = {hey};
