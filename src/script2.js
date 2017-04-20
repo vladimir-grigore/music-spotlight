@@ -12,10 +12,10 @@ var spotifyApi = new SpotifyWebApi({
 $(document).ready(function() {
   // find template and compile it
   var templateSource = document.getElementById('results-template').innerHTML,
-      template = Handlebars.compile(templateSource),
-      resultsPlaceholder = document.getElementById('results'),
-      playingCssClass = 'playing',
-      audioObject = null;
+    template = Handlebars.compile(templateSource),
+    resultsPlaceholder = document.getElementById('results'),
+    playingCssClass = 'playing',
+    audioObject = null;
 
   const network = document.getElementById('network');
   const visualizer = window.visualizer = new Visualizer(network);

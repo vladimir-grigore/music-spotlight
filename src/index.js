@@ -23,7 +23,7 @@ $(() => {
 
   async function search_Artists(name) {
     const data = await api.searchArtists(name);
-
+    console.log("DATA.BODY.ARTISTS.ITEMS", data.body.artists.items);
     for(let { id, name } of data.body.artists.items) {
       visualizer.addNode(id, name);
     }

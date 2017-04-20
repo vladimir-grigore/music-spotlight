@@ -1,75 +1,75 @@
 const LENGTH_MAIN = 350,
-      LENGTH_SERVER = 150,
-      LENGTH_SUB = 50,
-      WIDTH_SCALE = 2,
-      GREEN = 'green',
-      RED = '#C5000B',
-      ORANGE = 'orange',
-      //GRAY = '#666666',
-      GRAY = 'gray',
-      BLACK = '#2B1B17';
+		LENGTH_SERVER = 150,
+		LENGTH_SUB = 50,
+		WIDTH_SCALE = 2,
+		GREEN = 'green',
+		RED = '#C5000B',
+		ORANGE = 'orange',
+		//GRAY = '#666666',
+		GRAY = 'gray',
+		BLACK = '#2B1B17';
 
 import { DataSet, Network } from 'vis';
 
 export default class Visualizer {
 
-    constructor(container, nodes = [], edges = [], options = {}) {
-        this.container = container;
-        this.nodes = new DataSet(nodes);
-        this.edges = new DataSet(edges);
+		constructor(container, nodes = [], edges = [], options = {}) {
+				this.container = container;
+				this.nodes = new DataSet(nodes);
+				this.edges = new DataSet(edges);
 
-        const data = {
-            nodes: this.nodes,
-            edges: this.edges
-        };
+				const data = {
+						nodes: this.nodes,
+						edges: this.edges
+				};
 
-        this.options = Object.assign({}, {
-            nodes: {
-                scaling: {
-                    min: 16,
-                    max: 32
-                }
-            },
-            edges: {
-                color: GRAY,
-                smooth: false
-            },
-            physics: {
-                barnesHut: {
-                    gravitationalConstant: -30000
-                },
-                stabilization: {
-                    iterations: 2500
-                }
-            },
-            groups: {
-                artists: {
-                    shape: 'dot',
-                    color: "#ABCDEF" // red
-                }
-            }
-        }, options);
+				this.options = Object.assign({}, {
+						nodes: {
+								scaling: {
+										min: 16,
+										max: 32
+								}
+						},
+						edges: {
+								color: GRAY,
+								smooth: false
+						},
+						physics: {
+								barnesHut: {
+										gravitationalConstant: -30000
+								},
+								stabilization: {
+										iterations: 2500
+								}
+						},
+						groups: {
+								artists: {
+										shape: 'dot',
+										color: "#ABCDEF" // red
+								}
+						}
+				}, options);
 
-        this.vis = new Network(this.container, data, options);
-    }
+				this.vis = new Network(this.container, data, options);
+		}
 
-    addNode(id, label) {
-        this.nodes.add({
-            id,
-            label,
-            group: 'artists',
-            value: 10
-        });
-    }
-    
-    addEdge(from, to, label) {
-        this.edges.add({
-            from,
-            to,
-            label,
-            width: WIDTH_SCALE * 2
-        });
-    }
+		addNode(id, label) {
+				this.nodes.add({
+						id,
+						label,
+						group: 'artists',
+						value: 10
+				});
+		}
+
+		addEdge(from, to, label) {
+				this.edges.add({
+						from,
+						to,
+						label,
+						width: WIDTH_SCALE * 2
+				});
+		}
 }
 
 // // var $ = require('jquery');

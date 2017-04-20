@@ -54,7 +54,7 @@ module.exports = {
       name: "manifest", //But since there are no more common modules between them we end up with just the runtime code included in the manifest file
     }),
     new HtmlPlugin({
-      title: "YOUR TITLE HERE",
+      title: "Music Spotlight",
       template: "./src/index.html.ejs",
     }),
     new CleanupPlugin(),
