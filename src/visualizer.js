@@ -64,6 +64,13 @@ export default class Visualizer {
 		this.network.on('click', this.onClick);
 	}
 
+	// Clear all nodes and edges (used for new searches)
+	clear()	{
+		this.nodes.clear();
+		this.edges.clear();
+	}
+
+	// Click a node - will spawn albums, tracks or play a track
 	onClick = async ({ event, nodes, ...e }) => {
 		event.preventDefault();
 		event.stopPropagation();
@@ -72,23 +79,37 @@ export default class Visualizer {
 			return;
 		}
 		const node = this.nodes.get(id);
-		console.log("__", node.group)
-		
+
 		switch (node.group) {
 			case 'artist':
-				console.log('You clicked on an artist');
-				spotify_API.get_albums_for_artist(node.id);
+				const albums = await spotify_API.get_albums_for_artist(node.id);
+				albums.forEach(album => {
+					this.addAlbumNode(album.id, album.name);
+					this.addAlbumEdge(node.id, album.id);
+				});
+				break;
+			case 'album':
+				const tracks = await spotify_API.get_tracks_for_album(node.id);
+				tracks.forEach(track => {
+					this.addTrackNode(track.id, track.name);
+					this.addTrackEdge(node.id, track.id);
+				});
+				break;
+			case 'track':
+				const track = await spotify_API.get_track(node.id);
+				console.log("_-_", track);
+				// tracks.forEach(track => {
+				// 	this.addTrackNode(track.id, track.name);
+				// 	this.addTrackEdge(node.id, track.id);
+				// });
 				break;
 			default:
 				console.log('sorry');
 		}
-		// const album = await getSongsForAlbum(node.albumId);
-		const randomId = (new Date().getTime()).toString(36);
-		this.addNode(randomId, randomId);
-		this.addEdge(id, randomId, "Label");
+		// const randomId = (new Date().getTime()).toString(36);
 	}
 
-	addNode(id, label) {
+	addArtistNode(id, label) {
 		this.nodes.add({
 			id,
 			label,
@@ -99,7 +120,47 @@ export default class Visualizer {
 		});
 	}
 
-	addEdge(from, to, label) {
+	addArtistEdge(from, to, label) {
+		this.edges.add({
+			from,
+			to,
+			label,
+			width: WIDTH_SCALE * 2
+		});
+	}
+
+	addAlbumNode(id, label) {
+		this.nodes.add({
+			id,
+			label,
+			shape: 'dot',
+			group: 'album',
+			color: BLUE,
+			value: 6
+		});
+	}
+
+	addAlbumEdge(from, to, label) {
+		this.edges.add({
+			from,
+			to,
+			label,
+			width: WIDTH_SCALE * 2
+		});
+	}
+
+	addTrackNode(id, label) {
+		this.nodes.add({
+			id,
+			label,
+			shape: 'dot',
+			group: 'track',
+			color: GREEN,
+			value: 6
+		});
+	}
+
+	addTrackEdge(from, to, label) {
 		this.edges.add({
 			from,
 			to,
@@ -109,14 +170,11 @@ export default class Visualizer {
 	}
 }
 
-// // var $ = require('jquery');
 
-// // Create a data table with nodes.
+
+// var network = null;
 // var nodes = [];
-
-// // Create a data table with links.
 // var edges = [];
-  
 // export function createArtistNodes(id, name) {
 //   nodes.push({
 //     id: id,
@@ -126,23 +184,6 @@ export default class Visualizer {
 //   });
 //   console.log("NODE", nodes)
 // }
-
-// $(document).ready(function(){
-// //   var network = null;
-
-//   var LENGTH_MAIN = 350,
-//       LENGTH_SERVER = 150,
-//       LENGTH_SUB = 50,
-//       WIDTH_SCALE = 2,
-//       GREEN = 'green',
-//       RED = '#C5000B',
-//       ORANGE = 'orange',
-//       //GRAY = '#666666',
-//       GRAY = 'gray',
-//       BLACK = '#2B1B17';
-
-//   // Called when the Visualization API is loaded.
-
 // /*
 //   nodes.push({
 //       id: 1,
@@ -168,7 +209,6 @@ export default class Visualizer {
 //       group: 'switch',
 //       value: 6
 //   });
-
 //   edges.push({
 //       from: 1,
 //       to: 4,
@@ -190,7 +230,6 @@ export default class Visualizer {
 //       width: WIDTH_SCALE * 4,
 //       label: '0.55 mbps'
 //   });
-
 //   // group around 2
 //   for (var i = 90; i <= 104; i++) {
 //       var value = 1;
@@ -326,7 +365,6 @@ export default class Visualizer {
 //       width: WIDTH_SCALE,
 //       label: '0.3 mbps'
 //   });
-
 //   nodes.push({
 //       id: 204,
 //       label: 'Vlad',
@@ -401,5 +439,3 @@ export default class Visualizer {
 //       }
 //   };
 //   network = new vis.Network(container, data, options);
-
-// });

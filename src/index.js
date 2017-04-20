@@ -1,7 +1,6 @@
 import "bootstrap/dist/css/bootstrap.css";
 import $ from 'jquery';
-import Handlebars from 'handlebars/dist/handlebars.js';
-// import SpotifyWebApi from 'spotify-web-api-node';
+// import Handlebars from 'handlebars/dist/handlebars.js';
 
 import "../style.css";
 import Visualizer from './visualizer.js';
@@ -12,17 +11,14 @@ import SpotifyAPI from './spotify_web_api.js'
 // import App from './app.js';
 // render(<App />, document.getElementById('react-root'));
 
-// const api = new SpotifyWebApi({});
 const spotify_API = new SpotifyAPI();
 
 $(() => {
   const templateSource = $('#results-template').text();
-  const template = Handlebars.compile(templateSource);
-  const resultsPlaceholder = $('#results');
+  // const template = Handlebars.compile(templateSource);
+  // const resultsPlaceholder = $('#results');
   const network = document.getElementById('network');
-  const visualizer = window.visualizer = new Visualizer(network);
-
-  spotify_API.search_artists(name);
+  const visualizer = new Visualizer(network);
   /*
   async function search_artists(name) {
     const data = await api.searchArtists(name);
@@ -51,10 +47,12 @@ $(() => {
 
   const $query = $('#query');
 
-  const $searchFrom = $('#search-form').on('submit', function(e) {
+  const $searchFrom = $('#search-form').on('submit', async function(e) {
     e.preventDefault();
-    spotify_API.search_artists($query.val());
-    // searchArtists('nirvana').then(data => {
-    // })
+    visualizer.clear();
+    const artists = await spotify_API.search_artists($query.val());
+    for( {id, name } of artists) {
+      visualizer.addArtistNode(id, name);
+    }
   });
 });
