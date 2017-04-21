@@ -98,10 +98,6 @@ export default class Visualizer {
 			case 'track':
 				const track = await spotify_API.get_track(node.id);
 				console.log("_-_", track);
-				// tracks.forEach(track => {
-				// 	this.addTrackNode(track.id, track.name);
-				// 	this.addTrackEdge(node.id, track.id);
-				// });
 				break;
 			default:
 				console.log('sorry');
@@ -170,8 +166,6 @@ export default class Visualizer {
 	}
 }
 
-
-
 // var network = null;
 // var nodes = [];
 // var edges = [];
@@ -184,7 +178,6 @@ export default class Visualizer {
 //   });
 //   console.log("NODE", nodes)
 // }
-// /*
 //   nodes.push({
 //       id: 1,
 //       label: 'ABBA',
@@ -236,7 +229,6 @@ export default class Visualizer {
 //       var width = WIDTH_SCALE * 2;
 //       var color = GRAY;
 //       var label = null;
-
 //       if (i === 103) {
 //           value = 5;
 //           width = 3;
@@ -245,7 +237,6 @@ export default class Visualizer {
 //           color = RED;
 //           label = 'error';
 //       }
-
 //       nodes.push({
 //           id: i,
 //           label: '192.168.0.' + i,
@@ -275,7 +266,6 @@ export default class Visualizer {
 //       color: GRAY,
 //       width: WIDTH_SCALE
 //   });
-
 //   // group around 3
 //   nodes.push({
 //       id: 202,
@@ -378,14 +368,11 @@ export default class Visualizer {
 //       width: WIDTH_SCALE * 3,
 //       label: '0.63 mbps'
 //   });
-
-// */
 //   // legend
 //   // var mynetwork = document.getElementById('network');
 //   // var x = -mynetwork.clientWidth / 2 + 50;
 //   // var y = -mynetwork.clientHeight / 2 + 50;
 //   // var step = 70;
-
 //   // create a network
 //   var container = document.getElementById('network');
 //   var data = {
