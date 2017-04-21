@@ -4,6 +4,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const webpack = require("webpack");
 const HtmlPlugin = require("html-webpack-plugin");
 const CleanupPlugin = require("webpack-clean-obsolete-chunks");
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: ["babel-polyfill", path.resolve(__dirname, "src/index.js")],
@@ -41,6 +42,11 @@ module.exports = {
     ],
   },
   plugins: [
+    new Dotenv({
+      path: './.env', // if not simply .env 
+      safe: false, // does not load the .env.example
+      systemvars: true
+    }),
     new ExtractTextPlugin("[name].[chunkhash].css"),
     new webpack.optimize.CommonsChunkPlugin({
       name: "vendor",
@@ -64,4 +70,10 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
   },
   devtool: "source-maps",
+  node: {
+      child_process: 'empty',
+      fs: 'empty',
+      net: 'empty',
+      tls: 'empty'
+    }
 };

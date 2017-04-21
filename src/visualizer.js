@@ -1,4 +1,5 @@
 import SpotifyAPI from './spotify_web_api.js'
+import opn from 'opn';
 const spotify_API = new SpotifyAPI();
 
 const LENGTH_MAIN = 350,

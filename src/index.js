@@ -1,10 +1,12 @@
 import "bootstrap/dist/css/bootstrap.css";
 import $ from 'jquery';
+var dotenv = require('dotenv');
+dotenv.load();
 // import Handlebars from 'handlebars/dist/handlebars.js';
 
 import "../styles/style.css";
 import Visualizer from './visualizer.js';
-import SpotifyAPI from './spotify_web_api.js'
+import SpotifyAPI from './spotify_web_api.js';
 
 // import React, { Component } from 'react';
 // import { render } from 'react-dom';
@@ -14,7 +16,7 @@ import SpotifyAPI from './spotify_web_api.js'
 const spotify_API = new SpotifyAPI();
 
 $(() => {
-  const templateSource = $('#results-template').text();
+  // const templateSource = $('#results-template').text();
   const network = document.getElementById('network');
   const visualizer = new Visualizer(network);
 
