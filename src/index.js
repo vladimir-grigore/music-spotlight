@@ -1,7 +1,5 @@
 import "bootstrap/dist/css/bootstrap.css";
 import $ from 'jquery';
-var dotenv = require('dotenv');
-dotenv.load();
 // import Handlebars from 'handlebars/dist/handlebars.js';
 
 import "../styles/style.css";

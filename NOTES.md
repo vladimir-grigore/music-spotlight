@@ -12,3 +12,5 @@
 http://oos.moxiecode.com/blog/index.php/experiments/javascript-webgl/
 
 - Vis network examples: http://visjs.org/network_examples.html
+- Vis network docs: https://www.l2f.inesc-id.pt/~david/wiki/pt/extensions/vis/docs/network.html
+

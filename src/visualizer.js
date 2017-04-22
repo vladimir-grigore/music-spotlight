@@ -1,5 +1,4 @@
-import SpotifyAPI from './spotify_web_api.js'
-import opn from 'opn';
+import SpotifyAPI from './spotify_web_api.js';
 const spotify_API = new SpotifyAPI();
 
 const LENGTH_MAIN = 350,
@@ -27,6 +26,7 @@ export default class Visualizer {
 		};
 
 		this.options = Object.assign({}, {
+			interaction: { hover: true },
 			nodes: {
 				scaling: {
 					min: 8,
@@ -98,7 +98,7 @@ export default class Visualizer {
 				break;
 			case 'track':
 				const track = await spotify_API.get_track(node.id);
-				console.log("_-_", track);
+				// console.log("_-_", track.tracks[0]['preview_url']);
 				break;
 			default:
 				console.log('sorry');
@@ -111,6 +111,7 @@ export default class Visualizer {
 			id,
 			label,
 			shape: 'dot',
+			title: "POPUP",
 			group: 'artist',
 			color: RED,
 			value: 6
@@ -122,7 +123,8 @@ export default class Visualizer {
 			from,
 			to,
 			label,
-			width: WIDTH_SCALE * 2
+			width: WIDTH_SCALE * 2,
+			title: "===="
 		});
 	}
 
@@ -133,7 +135,8 @@ export default class Visualizer {
 			shape: 'dot',
 			group: 'album',
 			color: BLUE,
-			value: 6
+			value: 6,
+			title: "POP UP"
 		});
 	}
 
@@ -142,7 +145,8 @@ export default class Visualizer {
 			from,
 			to,
 			label,
-			width: WIDTH_SCALE * 2
+			width: WIDTH_SCALE * 2,
+			title: "POP UP"
 		});
 	}
 
